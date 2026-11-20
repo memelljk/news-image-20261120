@@ -61,8 +61,9 @@ HEROES = [
         "kick": "JUSTICE · THE HAGUE",
         "head": "WORLD COURT: MYANMAR COMMITTED GENOCIDE",
         "deck": "ICJ rules 9\u20136 for The Gambia \u2014 the first genocide finding "
-                "against a state by the world court. Rohingya refugees welcome the verdict.",
+                "against a state by the world court.",
         "scene": "court",
+        "foot": "9\u20136 verdict \u00b7 Rohingya refugees welcome it",
     },
     {
         "kick": "SHENZHEN SUMMIT",
@@ -70,13 +71,15 @@ HEROES = [
         "deck": "First three-way summit agrees a four-point joint peace declaration "
                 "as APEC leaders meet alongside.",
         "scene": "flags",
+        "foot": "Four-point joint peace declaration \u00b7 APEC leaders alongside",
     },
     {
         "kick": "MONEY · NASDAQ",
         "head": "ANTHROPIC'S $81.3B IPO STORMS NASDAQ",
-        "deck": "Priced $83, opened $111.50, closed $97.17 (+17%) \u2014 briefly a "
-                "$2 trillion company; the largest IPO in history.",
+        "deck": "Briefly a $2 trillion company \u2014 the largest IPO in history, "
+                "on a wild first day on the NASDAQ.",
         "scene": "chart",
+        "foot": "Priced $83 \u00b7 Opened $111.50 \u00b7 Closed $97.17 (+17%)",
     },
 ]
 
@@ -149,7 +152,7 @@ SOCIETY = [
 ]
 
 SPORT = [
-    ("NZ 243/5 vs INDIA", "Wellington Test D1 \u2014 Nicholls 113 not out."),
+    ("NZ 243/5 vs INDIA", "Wellington Test D1 \u2014 Henry Nicholls 113 not out."),
     ("F1 IN LAS VEGAS", "Prize-money jackpot fight under the lights."),
     ("GTA 6 TOPS $1.80B", "Sales pass The Odyssey's $1.80B global run."),
     ("FAIRFORD TRIAL SET", "Two charged over RAF incursion; trial Nov 2027."),
@@ -268,23 +271,35 @@ def draw_lines(d, x, y, lines, font, lh, fill):
 
 def scene_court(d, x, y, w, h):
     d.rectangle([x, y, x + w, y + h], fill=(196, 214, 228))
-    d.rectangle([x, y + h - 16, x + w, y + h], fill=(90, 96, 104))
+    d.ellipse([x + 16, y + 10, x + 40, y + 34], fill=(250, 210, 60), outline=(200, 160, 40))
+    d.rectangle([x, y + h - 14, x + w, y + h], fill=(90, 96, 104))
     cx = x + w // 2
-    d.polygon([(cx - 86, y + 30), (cx + 86, y + 30), (cx, y + 8)], fill=(240, 236, 224), outline=INK)
-    d.rectangle([x + 28, y + 34, x + w - 28, y + 40], fill=(240, 236, 224), outline=INK)
+    # steps up to the portico
+    d.rectangle([x + 52, y + h - 22, x + w - 52, y + h - 14], fill=(214, 208, 192), outline=INK)
+    d.rectangle([x + 66, y + h - 29, x + w - 66, y + h - 22], fill=(228, 222, 206), outline=INK)
+    d.polygon([(cx - 92, y + 28), (cx + 92, y + 28), (cx, y + 6)], fill=(240, 236, 224), outline=INK)
+    d.ellipse([cx - 5, y + 13, cx + 5, y + 23], outline=INK, width=2)
+    d.rectangle([x + 24, y + 31, x + w - 24, y + 38], fill=(240, 236, 224), outline=INK)
     for i in range(5):
         px = x + 44 + i * ((w - 88) // 4)
-        d.rectangle([px - 6, y + 42, px + 6, y + h - 20], fill=(240, 236, 224), outline=INK)
-    # scales of justice
-    d.line([cx, y + 46, cx, y + 74], fill=INK, width=3)
-    d.line([cx - 26, y + 50, cx + 26, y + 50], fill=INK, width=3)
-    for sx in (cx - 26, cx + 26):
-        d.line([sx, y + 50, sx - 9, y + 64], fill=INK, width=2)
-        d.line([sx, y + 50, sx + 9, y + 64], fill=INK, width=2)
-        d.arc([sx - 11, y + 58, sx + 11, y + 74], 0, 180, fill=INK, width=2)
-    # gavel
-    d.line([x + w - 62, y + h - 30, x + w - 34, y + h - 44], fill=(110, 72, 30), width=5)
-    d.rectangle([x + w - 78, y + h - 52, x + w - 58, y + h - 38], fill=(110, 72, 30), outline=INK)
+        d.rectangle([px - 6, y + 40, px + 6, y + h - 29], fill=(240, 236, 224), outline=INK)
+        d.rectangle([px - 8, y + 40, px + 8, y + 44], fill=(240, 236, 224), outline=INK)
+    # scales of justice, front and centre
+    d.line([cx, y + 42, cx, y + 66], fill=INK, width=3)
+    d.ellipse([cx - 4, y + 38, cx + 4, y + 46], fill=INK)
+    d.line([cx - 30, y + 46, cx + 30, y + 46], fill=INK, width=3)
+    for sx in (cx - 30, cx + 30):
+        d.line([sx, y + 46, sx - 10, y + 62], fill=INK, width=2)
+        d.line([sx, y + 46, sx + 10, y + 62], fill=INK, width=2)
+        d.arc([sx - 12, y + 55, sx + 12, y + 72], 0, 180, fill=INK, width=3)
+    d.rectangle([cx - 12, y + 66, cx + 12, y + 70], fill=INK)
+    # trees flanking the steps
+    for tx in (x + 26, x + w - 38):
+        d.rectangle([tx + 4, y + h - 34, tx + 8, y + h - 14], fill=(110, 72, 30))
+        d.ellipse([tx - 4, y + h - 56, tx + 16, y + h - 32], fill=(64, 110, 62), outline=(44, 84, 44))
+    # gavel on the bench line
+    d.line([x + w - 64, y + h - 32, x + w - 36, y + h - 46], fill=(110, 72, 30), width=5)
+    d.rectangle([x + w - 80, y + h - 54, x + w - 60, y + h - 40], fill=(110, 72, 30), outline=INK)
 
 
 def scene_flags(d, x, y, w, h):
@@ -494,8 +509,11 @@ for i, hero in enumerate(HEROES):
     d.text((x + 10, HY + 106), kt, font=kf, fill=GOLD)
     hf, hl, hlh = fit_lines(d, hero["head"], SERIF_B, 17, 12, HW - 20, 3)
     yy = draw_lines(d, x + 10, HY + 122, hl, hf, hlh, INK)
-    dfnt, dl, dlh = fit_lines(d, hero["deck"], SANS, 11, 9, HW - 20, 3)
+    dfnt, dl, dlh = fit_lines(d, hero["deck"], SANS, 11, 9, HW - 20, 2)
     draw_lines(d, x + 10, yy + 2, dl, dfnt, dlh, (52, 48, 42))
+    d.line([x + 10, HY + HH - 20, x + HW - 10, HY + HH - 20], fill=(205, 198, 178), width=1)
+    ff, ft = one_line(d, hero["foot"], SANS_B, 10, 8, HW - 20)
+    d.text((x + 10, HY + HH - 15), ft, font=ff, fill=(110, 84, 20))
 
 # --- section columns
 SEC_Y = 328

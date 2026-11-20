@@ -101,7 +101,7 @@ WORLD = [
 
 MONEY = [
     ("WALL STREET", "Fifth straight fall",
-     "S&P 500 \u22122%, Nasdaq \u22122.2%, Dow \u22121,101 points as the AI sell-off bites.", "down"),
+     "S&P 500 -2%, Nasdaq -2.2%, Dow -1,101 points as the AI sell-off bites.", "down"),
     ("ASIA", "Nikkei sinks 4.8%",
      "Taiwan index plunges 2,200+ points intraday and breaks below 37,000.", "down"),
     ("IMF", "IMF debt alarm",
@@ -149,11 +149,11 @@ SOCIETY = [
 ]
 
 SPORT = [
-    ("NZ 243/5 vs INDIA", "Wellington Test, day 1 \u2014 Henry Nicholls 113 not out."),
-    ("F1 IN LAS VEGAS", "Teams fight for the prize-money jackpot under the lights."),
-    ("GTA 6 TOPS $1.80B", "Game sales pass The Odyssey's $1.80B global box-office run."),
-    ("FAIRFORD TRIAL SET", "Two charged over the RAF Fairford incursion; trial Nov 2027."),
-    ("IRAQ MOVES SOUTH", "Forces deploy in Jurf al-Sakhar vs a smuggling network."),
+    ("NZ 243/5 vs INDIA", "Wellington Test D1 \u2014 Nicholls 113 not out."),
+    ("F1 IN LAS VEGAS", "Prize-money jackpot fight under the lights."),
+    ("GTA 6 TOPS $1.80B", "Sales pass The Odyssey's $1.80B global run."),
+    ("FAIRFORD TRIAL SET", "Two charged over RAF incursion; trial Nov 2027."),
+    ("IRAQ MOVES SOUTH", "Jurf al-Sakhar push vs Kataib Hezbollah smuggling."),
 ]
 
 WIRE = [
@@ -173,7 +173,7 @@ NUMBERS_COUNTED = [
     ("$81.3B", "raised in Anthropic's record IPO"),
     ("9\u20136", "ICJ vote on Myanmar genocide"),
     ("300,000", "evacuated ahead of Cyclone Akvan"),
-    ("\u22124.8%", "Nikkei fall on the day"),
+    ("-4.8%", "Nikkei fall on the day"),
     ("$190.4M", "record price for a Van Gogh"),
     ("100,000", "EU\u2013UK youth places a year"),
 ]
@@ -546,10 +546,10 @@ for i, (head, deck) in enumerate(SPORT):
     x = M + 86 + i * CELLW
     if i:
         d.line([x, SY + 8, x, SY + SH - 8], fill=(110, 118, 132), width=1)
-    hf, hl, hlh = fit_lines(d, head, SANS_B, 12, 9, CELLW - 14, 2)
-    draw_lines(d, x + 7, SY + 6, hl, hf, hlh, (250, 247, 238))
-    dfnt, dt = one_line(d, deck, SANS, 9, 7, CELLW - 14)
-    d.text((x + 7, SY + SH - 15), dt, font=dfnt, fill=(196, 202, 214))
+    hf, hl, hlh = fit_lines(d, head, SANS_B, 12, 9, CELLW - 14, 1)
+    yy = draw_lines(d, x + 7, SY + 5, hl, hf, hlh, (250, 247, 238))
+    dfnt, dl, dlh = fit_lines(d, deck, SANS, 9, 8, CELLW - 14, 2)
+    draw_lines(d, x + 7, yy + 1, dl, dfnt, dlh, (196, 202, 214))
 
 # --- by the numbers band
 NY = SY + SH + 8
@@ -590,7 +590,7 @@ for i, item in enumerate(WIRE):
     col, row = i % 2, i // 2
     x = M + 10 + col * (WCOLW + 10)
     y = WY + 34 + row * ((WH - 40) // 4)
-    d.text((x, y), "\u25b8", font=F(SANS_B, 10), fill=(250, 210, 60))
+    d.polygon([(x, y + 2), (x, y + 10), (x + 7, y + 6)], fill=(250, 210, 60))
     fnt, txt = one_line(d, item, SANS, 10, 8, WCOLW - 16)
     d.text((x + 15, y + 1), txt, font=fnt, fill=WIRE_TX)
 
